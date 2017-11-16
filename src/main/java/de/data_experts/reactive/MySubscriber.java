@@ -1,17 +1,21 @@
 
 package de.data_experts.reactive;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Flow;
 
 class MySubscriber implements Flow.Subscriber<Long> {
     private Flow.Subscription subscription;
 
-    private static final int NUMBER_OF_REQUEST_ITEMS = 1000;
+    private static final int NUMBER_OF_REQUEST_ITEMS = 100;
 
     private final boolean verySlow;
 
-    public MySubscriber(boolean verySlow) {
+    private final CompletableFuture future;
+
+    MySubscriber(boolean verySlow, CompletableFuture future) {
         this.verySlow = verySlow;
+        this.future = future;
     }
 
     @Override
@@ -42,5 +46,6 @@ class MySubscriber implements Flow.Subscriber<Long> {
     @Override
     public void onComplete() {
         System.out.println("Done");
+        future.complete(new Object());
     }
 }

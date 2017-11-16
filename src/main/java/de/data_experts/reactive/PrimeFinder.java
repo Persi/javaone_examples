@@ -33,7 +33,7 @@ class PrimeFinder {
     static boolean isPrimeDeclarativeVerySlow(long number) {
         // producer much slower then consumer!
         try {
-            Thread.sleep(10L);
+            Thread.sleep(2L);
         } catch (InterruptedException e) {
             Thread.interrupted();
         }
