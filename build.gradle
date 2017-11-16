@@ -1,0 +1,48 @@
+group 'de.data_experts'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+sourceCompatibility = 9
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.4'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.0.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-migrationsupport', version: '5.0.1'
+    testRuntime("org.junit.platform:junit-platform-launcher:1.0.1")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.1")
+    testRuntime("org.junit.vintage:junit-vintage-engine:4.12.1")
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        // The following is only necessary if you want to use SNAPSHOT releases.
+        // maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+    }
+}
+
+junitPlatform {
+
+    platformVersion '1.0.1'
+    logManager 'java.util.logging.LogManager'
+    reportsDir file('build/test-results/junit-platform')
+
+    filters {
+        tags {
+            //include 'fast'
+            exclude project.hasProperty('runFastTests') ? '' : 'fast'
+        }
+    }
+    // ...
+}
