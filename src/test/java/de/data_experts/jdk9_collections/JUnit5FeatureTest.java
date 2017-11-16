@@ -8,6 +8,7 @@ import org.junit.jupiter.api.function.ThrowingConsumer;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.JavaTimeConversionPattern;
 import org.junit.jupiter.params.provider.*;
+import org.opentest4j.AssertionFailedError;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ class JUnit5FeatureTest {
 
     @Test
     void testTimeoutWithoutForcedEnd() {
-        Assertions.assertTimeout(Duration.ofMillis(1000), () -> findAllPrimes(100000).forEach(System.out::println), "Ermittlung aller Primzahlen bis 100000 nicht in einer Sekunde möglich.");
+        Assertions.assertThrows(AssertionFailedError.class, () -> Assertions.assertTimeout(Duration.ofMillis(1000), () -> findAllPrimes(100000).forEach(System.out::println), "Ermittlung aller Primzahlen bis 100000 nicht in einer Sekunde möglich."));
     }
 
     // Wieso ist dieser Test grün, der darüber aber nicht?!
@@ -45,7 +46,7 @@ class JUnit5FeatureTest {
 
     @Test
     void testTimeoutWithForcedEnd() {
-        Assertions.assertTimeoutPreemptively(Duration.ofMillis(1000), () -> findAllPrimes(1000000).forEach(System.out::println), "Ermittlung aller Primzahlen bis 1000000 nicht in einer Sekunde erfolgreich.");
+        Assertions.assertThrows(AssertionFailedError.class, () -> Assertions.assertTimeoutPreemptively(Duration.ofMillis(1000), () -> findAllPrimes(1000000).forEach(System.out::println), "Ermittlung aller Primzahlen bis 1000000 nicht in einer Sekunde erfolgreich."));
     }
 
     @FastTest
