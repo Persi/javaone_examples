@@ -65,7 +65,6 @@ class ReactiveTest {
     }
 
     @Test
-    @Disabled
     void testPrimesFindClassicWay() {
         for (long number = START_POINT; number <= END_POINT; number++) {
             if (PrimeFinder.isPrimeImperative(number)) {
@@ -85,7 +84,6 @@ class ReactiveTest {
     }
 
     @Test
-    @Disabled
     void testFibonacciCalculateClassicWay() {
         IntStream.range(1, 51).forEach(number -> System.out.println("Fib for " + number + " = " + FibCalculator.fib(number)));
     }
